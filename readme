@@ -1,7 +1,7 @@
-
 0. créer un environnement nnUnet : conda create -n nnUnet
 conda activate nnUnet
 installer la version de pytorch compatible avec CUDA (valider la version de CUDA : nvcc --version ) se fier à https://github.com/pytorch/pytorch/blob/main/RELEASE.md#release-compatibility-matrix pour la compatibilité 
+installation pytorch ici : https://pytorch.org/get-started/locally/ 
 
 1. conda activate l'environnement si déjà créé
 
@@ -48,10 +48,13 @@ export nnUNet_raw="chemin sur votre espace de travail/nnUnet_master/dataset/nnUN
 export nnUNet_preprocessed="chemin sur votre espace de travail/nnUnet_master/dataset/nnUNet_preprocessed"
 export nnUNet_results="chemin sur votre espace de travail/nnUnet_master/dataset/nnUNet_results"
 
+Nous sommes prêts à rouler l'inférence. Copier coller la ligne suivante dans le terminal
+changer -o pour le chemin où vous voulez votre dossier output avec les prédictions
+-c choisir entre 2d ou 3d_fullres en fonction du modèle pré-entrainé et vos besoins.
+-t chemin d'accès vers le dossier results est optionnel, mais fut nécessaire dans mon cas pour une raison quelconque. NOTEZ bien la fin du chemin(/nnUnet_master/dataset/nnUNet_results/Dataset001_Brain/nnUNetTrainer) à garder tel quel ou si message d'erreur, s'assurer que le chemin mène vers les fichiers checkpoints (/nnUnet_master/dataset/nnUNet_results/Dataset001_Brain/nnUNetTrainer__nnUNetPlans_2d/fold_all/checkpoint_best.pth)
+nnUNetv2_predict -i imagesTs/ -o /home/llg/Downloads/nnUnet_master/dataset/pred_nnUnet/ -d Dataset001_Brain -c 3d_fullres -f all -t /home/llg/Downloads/nnUnet_master/dataset/nnUNet_results/Dataset001_Brain/nnUNetTrainer
 
-nnUNetv2_predict -i INPUT_FOLDER -o OUTPUT_FOLDER -d DATASET_NAME_OR_ID -c CONFIGURATION --save_probabilities
-
-
+ex de commande terminal : (nnunet) llg@llg-ThinkPad-T15g-Gen-1-2:~/Downloads/nnUnet_master/dataset/nnUnet_raw/Dataset001_Brain$ nnUNetv2_predict -i imagesTs/ -o /home/llg/Downloads/nnUnet_master/dataset/pred_nnUnet/ -d Dataset001_Brain -c 2d -f all -t /home/llg/Downloads/nnUnet_master/dataset/nnUNet_results/Dataset001_Brain/nnUNetTrainer
 
 
 
