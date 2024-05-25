@@ -44,9 +44,9 @@ s'assurer que environnement toujours activé
 
 Dans le terminal, copier et coller les lignes suivantes après les avoir adaptées à votre espace de travail
 
-export nnUNet_raw="chemin sur votre espace de travail/dataset/nnUNet_raw"
-export nnUNet_preprocessed="chemin sur votre espace de travail/dataset/nnUNet_preprocessed"
-export nnUNet_results="chemin sur votre espace de travail/dataset/nnUNet_results"
+export nnUNet_raw="chemin sur votre espace de travail/nnUnet_master/dataset/nnUNet_raw"
+export nnUNet_preprocessed="chemin sur votre espace de travail/nnUnet_master/dataset/nnUNet_preprocessed"
+export nnUNet_results="chemin sur votre espace de travail/nnUnet_master/dataset/nnUNet_results"
 
 
 nnUNetv2_predict -i INPUT_FOLDER -o OUTPUT_FOLDER -d DATASET_NAME_OR_ID -c CONFIGURATION --save_probabilities
