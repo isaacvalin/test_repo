@@ -1,1 +1,57 @@
-readme
+
+0. créer un environnement nnUnet : conda create -n nnUnet
+conda activate nnUnet
+installer la version de pytorch compatible avec CUDA (valider la version de CUDA : nvcc --version ) se fier à https://github.com/pytorch/pytorch/blob/main/RELEASE.md#release-compatibility-matrix pour la compatibilité 
+
+1. conda activate l'environnement si déjà créé
+
+2. cloner ce répertoire et s'assurer d'avoir la structure suivante : nnUnet-master -> dataset ; nnUNet
+nnUnet correspond exactement au github de nnUNet (https://github.com/MIC-DKFZ/nnUNet/tree/master) RIEN N'EST À CHANGER DANS CE DOSSIER
+dataset doit contenir les 3 dossiers suivants : nnUNet_raw ; nnUNet_preprocessed ; nnUNet_results
+pour entrainer un modèle, nnUNet_preprocessed et nnUNet_results sont à laisser vide
+nnUNet_raw doit contenir:
+Dataset001_Brain/
+├── dataset.json
+├── imagesTr : contient/déposer les images d'entrainement
+├── imagesTs  : contient/déposer les images pour faire l'inférence
+└── labelsTr : contient-déposer les GT correspondant aux images d'entrainement
+
+ATTENTION À LA NOMENCLATURE : LES IMAGES DOIEVENT ÊTRE NOMMÉES XXX_0000.nii.gz (ex : Volume_ID_ioasfjija_0000.nii.gz)
+pour plus d'information, référez-vous à https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/dataset_format.md
+
+2.5 Pour entrainer le modèle, 
+nnUNetv2_train DATASET_NAME_OR_ID 2d FOLD [--npz]
+nnUNetv2_train DATASET_NAME_OR_ID 3d_fullres FOLD [--npz]
+
+3 inférence : pour faire de l'inférence sur un model pré-entrainé, assurez-vous d'avoir le dossier nnUNet_results du model entrainé, et qu'il contient les fichiers suivants :
+nnUNet_results/
+├── Dataset002_Heart
+    │── nnUNetTrainer__nnUNetPlans__2d
+    │    ├── fold_all 
+    │    ├── dataset.json
+    │    ├── dataset_fingerprint.json
+    │    └── plans.json
+    └── nnUNetTrainer__nnUNetPlans__3d_fullres
+         ├── fold_all
+         ├── dataset.json
+         ├── dataset_fingerprint.json
+         └── plans.json
+ASSUREZ VOUS QUE LES DOSSIERS FOLD CONTIENNENT LES FICHIERS SUIVANTS: debug.json ; checkpoint_best.pth ; checkpoint_final.pth ; network_architecture.pdf ; progress.png ; validation_raw )
+les fichiers checkpoint_best.pth ; checkpoint_final.pth sont à aller chercher sur le drive 
+
+dans le terminal: cd jusqu'au dossier dataset/nnUNet_raw/Dataset001_Brain
+s'assurer que environnement toujours activé
+
+Dans le terminal, copier et coller les lignes suivantes après les avoir adaptées à votre espace de travail
+
+export nnUNet_raw="chemin sur votre espace de travail/dataset/nnUNet_raw"
+export nnUNet_preprocessed="chemin sur votre espace de travail/dataset/nnUNet_preprocessed"
+export nnUNet_results="chemin sur votre espace de travail/dataset/nnUNet_results"
+
+
+nnUNetv2_predict -i INPUT_FOLDER -o OUTPUT_FOLDER -d DATASET_NAME_OR_ID -c CONFIGURATION --save_probabilities
+
+
+
+
+
